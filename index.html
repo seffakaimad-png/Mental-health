@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Check-in : une semaine avec Alex</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
+--bg:#eef2f7;--card:#fff;--fg:#1b2a41;--mut:#52627a;--ac:#2a5fb0;--acf:#fff;--line:#d5dde9;--soft:#e4edf9;--warn:#b4472b;--ge:#c98a00;--gl:#3a7bd5;--gs:#1f9e8f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1722;--card:#172233;--fg:#e7edf5;--mut:#a3b3c8;--ac:#7fb0ff;--acf:#0b1524;--line:#2c3b52;--soft:#1c2c45;--warn:#f08a6a;--ge:#f0b429;--gl:#6ea8ff;--gs:#4cc9b8}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1722;--card:#172233;--fg:#e7edf5;--mut:#a3b3c8;--ac:#7fb0ff;--acf:#0b1524;--line:#2c3b52;--soft:#1c2c45;--warn:#f08a6a;--ge:#f0b429;--gl:#6ea8ff;--gs:#4cc9b8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 "Avenir Next","Trebuchet MS",system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:2.2rem;line-height:1.1;margin:.2em 0}
+h2{font-size:1.3rem;line-height:1.25;margin:.2em 0 .6em}
+p{margin:.5em 0}
+.mut{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+.top{display:flex;justify-content:space-between;gap:8px;color:var(--mut);font-size:.92rem}
+.gs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}
+.g{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.g b{display:block;font-size:.95rem}
+.g em{font-style:normal;font-size:.85rem;color:var(--mut)}
+.bar{display:flex;gap:3px;margin:6px 0 2px}
+.bar i{flex:1;height:10px;border-radius:3px;background:var(--line)}
+.bar i.on{background:var(--c)}
+.g.e{--c:var(--ge)}.g.l{--c:var(--gl)}.g.s{--c:var(--gs)}
+button{font:inherit;cursor:pointer}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--fg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;min-height:48px}
+.opt:hover{border-color:var(--ac)}
+.opt.sel{border-color:var(--ac);background:var(--soft)}
+.opt b{margin-right:8px;color:var(--ac)}
+.vis{font-size:3rem;line-height:1;margin-bottom:6px}.vis img{width:100%;max-height:220px;object-fit:cover;border-radius:10px}
+#tv{font-size:1.6rem;font-weight:700;margin-right:12px}
+.qrbox{background:#fff;padding:12px;display:inline-block;border-radius:8px;margin:8px 0}.sc{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.9rem}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+input[type=text]{width:100%;font:inherit;background:var(--bg);color:var(--fg);border:2px solid var(--line);border-radius:10px;padding:8px;margin:4px 0 10px}
+.btn{background:var(--ac);color:var(--acf);border:0;border-radius:12px;padding:12px 20px;font-weight:700;min-height:48px}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn.sec{background:transparent;color:var(--fg);border:2px solid var(--line)}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.chip{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 10px;margin:2px 4px 2px 0;font-size:.9rem}
+.note{border-left:4px solid var(--ac);padding:8px 12px;background:var(--soft);border-radius:0 10px 10px 0;margin:12px 0}
+.note.warn{border-left-color:var(--warn)}
+textarea{width:100%;font:inherit;background:var(--bg);color:var(--fg);border:2px solid var(--line);border-radius:10px;padding:8px;margin:4px 0 12px}
+label{display:block;margin:8px 0}
+ul,ol{padding-left:1.3em}
+@media (prefers-reduced-motion:no-preference){.card{animation:in .25s ease}}
+@keyframes in{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+var C={
+1:{t:"Dimanche soir",s:"Trois contrôles cette semaine. Alex n’arrive pas à dormir et son téléphone est à portée de main.",o:[["Scroller jusqu’à s’endormir",{e:-2,s:-1}],["Noter ce qui l’inquiète, planifier ses révisions et poser le téléphone loin du lit",{e:1,s:1}],["Réviser toute la nuit",{e:-3,s:-1}]],k:"Le sommeil est une base de la santé mentale. Mettre ses soucis sur papier et couper les écrans aide à s’endormir."},
+2:{t:"Le groupe de classe",s:"Une photo gênante d’Alex circule dans le groupe de classe, avec des moqueries.",o:[["Répondre avec agressivité",{l:-1,s:-2}],["Ne rien dire et faire comme si de rien n’était",{l:-1,s:-2}],["Faire des captures d’écran, en parler à un adulte ou à un·e ami·e, et signaler",{l:1,s:1,r:1}]],k:"Le cyberharcèlement n’est jamais la faute de la victime. On garde les preuves, on bloque, on signale, on en parle. Le 3018 est gratuit et confidentiel."},
+3:{t:"L’ami qui s’éloigne",s:"Mehdi, le meilleur ami d’Alex, ne vient plus à la récré et répond sèchement aux messages.",o:[["Se dire « il se débrouille »",{l:-2}],["Lui écrire : « Je pense à toi, ça va ? Je suis là si tu veux parler. »",{l:2}],["Demander à tout le monde ce qui lui arrive",{l:-1,s:-1}]],k:"On ouvre une porte sans forcer. Répandre ce qu’on imagine isole encore plus."},
+4:{t:"La note",s:"Alex récupère un 7/20 en maths.",o:[["Se dire « je suis nul·le, c’est foutu »",{s:-2}],["Regarder ce qui n’a pas marché et demander de l’aide au prof",{s:1,r:1}],["Jeter la copie et ne plus y penser",{s:-1}]],k:"Une note ne mesure pas ce qu’on vaut. « Je suis nul·le » est une pensée automatique qu’on peut remettre en question."},
+5:{t:"Ça dure depuis deux semaines",s:"Depuis deux semaines, Alex se sent vidé·e et n’a plus envie de voir ses amis ni de faire ce qu’il ou elle aimait.",o:[["Se forcer à sourire : « ça va passer »",{s:-2,l:-1}],["En parler à un adulte de confiance (parent, CPE, infirmier·ère)",{s:2,r:1}],["Se dire que c’est de la faiblesse",{s:-2}]],k:"Un mal-être qui dure et touche le sommeil, l’envie et les relations est un signal à ne pas ignorer. Demander de l’aide n’est pas une faiblesse."},
+7:{t:"Les réseaux",s:"Alex passe trois heures sur les réseaux et se compare aux autres, qui semblent toujours heureux et parfaits.",o:[["Continuer à scroller",{s:-2}],["Fixer une limite de temps et couper les notifications",{s:1,e:1}],["Se désabonner des comptes qui donnent un sentiment de nullité",{s:1}]],k:"Les réseaux montrent une version arrangée de la vie des gens. On peut choisir ce qu’on regarde."},
+8:{w:1,t:"Le message de Léa",s:"Une amie, Léa, écrit à Alex : « Je n’en peux plus de tout, j’ai envie de disparaître. »",o:[["Répondre « T’inquiète pas, ça va passer » et changer de sujet",{l:-2}],["L’écouter sans juger, lui dire qu’on s’inquiète pour elle et prévenir un adulte, même si elle demande de garder le secret",{l:2,r:1}],["Garder le secret parce qu’on a promis",{s:-2,l:-1}]],k:"On n’a pas à porter ça tout seul. Prévenir un adulte n’est pas une trahison, c’est de la protection. En urgence : 3114 (24 h/24) ou 15 / 112."},
+9:{t:"Trop de choses",s:"Sport, devoirs, job le week-end, obligations familiales : Alex n’a plus une minute à soi.",o:[["Tout garder : « je gère »",{e:-2,s:-2}],["Prioriser et lâcher une activité",{e:1,s:1}],["En parler à un prof ou à un parent pour alléger",{s:1,l:1}]],k:"Poser des limites fait partie de la santé mentale. On a le droit de ne pas tout faire."},
+10:{t:"Tension à la maison",s:"L’ambiance est tendue à la maison depuis plusieurs jours. Alex se sent mal à l’aise.",o:[["Claquer la porte et se couper de tout le monde",{l:-1,s:-1}],["Aller marcher, respirer, puis en reparler plus tard",{s:1}],["En parler à un·e ami·e ou à un adulte de confiance",{l:1,s:1,r:1}]],k:"On ne contrôle pas tout ce qui se passe à la maison, mais on peut chercher du soutien. En cas de danger : 119."},
+11:{t:"L’oral",s:"Alex passe à l’oral demain : cœur qui bat, mains moites, envie de fuir.",o:[["Faire semblant d’être malade pour l’éviter",{s:-1}],["S’entraîner devant un·e ami·e et respirer lentement (inspirer 4 s, souffler 6 s)",{s:2,r:1}],["Boire trois boissons énergisantes",{e:-1,s:-2}]],k:"Un peu de stress est normal et peut aider. Il devient un problème quand il paralyse ou dure trop longtemps. Des techniques simples existent."},
+12:{f:1,t:"Vendredi : le bilan",s:"Alex repense à sa semaine. Répondez ensemble :",q:["Quel a été le moment le plus difficile pour Alex ?","Qu’est-ce qui l’a le plus aidé·e ?","Citez trois personnes ou ressources vers qui Alex pourrait se tourner."]}
+};
+var DAYS=["Lundi","Lundi","Mardi","Mardi","Mercredi","Mercredi","Jeudi","Jeudi","Vendredi","Vendredi"];
+var NAMES={e:"Énergie",l:"Liens",s:"Sérénité"};
+var WHO=["Un parent ou un adulte de la famille","Un·e professeur·e ou le/la CPE","L’infirmier·ère scolaire","Un·e ami·e de confiance","Un·e professionnel·le (psychologue, médecin)"];
+var PHR=["« Je ne me sens pas bien depuis un moment, est-ce que je peux te parler ? »","« J’ai du mal à dormir et à me concentrer, et ça m’inquiète. »","« J’ai besoin d’aide, mais je ne sais pas par où commencer. »","« Tu peux m’aider à trouver quelqu’un à qui en parler ? »"];
+var app=document.getElementById("app"),S=null;
+var ADM=null,TI=null,KEY='checkin_equipes';
+var VIS={'Dimanche soir':'😴','Le groupe de classe':'📱','L’ami qui s’éloigne':'💬','La note':'📝','Ça dure depuis deux semaines':'🌧️','Les réseaux':'📲','Le message de Léa':'💌','Trop de choses':'🗓️','Tension à la maison':'🏠','L’oral':'🎤'};
+var PHOTOS={};
+function vis(c){return '<div class=vis aria-hidden=true>'+(PHOTOS[c.t]?'<img alt="" src="'+PHOTOS[c.t]+'">':(VIS[c.t]||''))+'</div>'}
+function loadEq(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}}
+var EQ=loadEq();
+function store(){try{localStorage.setItem(KEY,JSON.stringify(EQ))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function adm(){ADM='adm';S=null;draw(1)}
+function cmp(){ADM='cmp';draw(1)}
+function addEq(){var n=document.getElementById('en').value.trim(),m=document.getElementById('em').value.split(/[\n,]+/).map(function(x){return x.trim()}).filter(Boolean);if(!n&&m.length===1)n=m[0];if(!n)return;EQ.push({id:Date.now(),n:n,m:m,r:null});store();draw()}
+function delEq(id){EQ=EQ.filter(function(e){return e.id!==id});store();draw()}
+function save(){if(!S.eid)return;EQ.forEach(function(e){if(e.id===S.eid)e.r={g:S.g,u:S.used,a:S.alerts,l:S.log}});store()}
+function tstop(){if(TI){clearInterval(TI);TI=null}}
+function tick(t){var e=document.getElementById('tv');if(e)e.textContent=t>0?Math.floor(t/60)+':'+('0'+t%60).slice(-2):'Temps écoulé'}
+function tstart(){tstop();var t=60;tick(t);TI=setInterval(function(){t--;tick(t);if(t<=0)tstop()},1000)}
+window.addEventListener('hashchange',function(){draw()});
+var BASE=location.href.split('#')[0],MYL='',IMSG='';
+try{MYL=localStorage.getItem('checkin_lien')||''}catch(e){}
+function grp(){var m=/^#g(x?)-([a-z0-9-]+)$/.exec(location.hash);return m?{slug:m[2],sens:m[1]?0:1}:null}
+function mkGrp(){var n=document.getElementById('gn').value,s=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,30);if(!s)return;MYL=BASE+'#g'+(document.getElementById('gs').checked?'':'x')+'-'+s;try{localStorage.setItem('checkin_lien',MYL)}catch(e){}draw()}
+function qr(){var el=document.getElementById('qr');if(el&&window.QRCode){el.innerHTML='';new QRCode(el,{text:MYL,width:200,height:200})}}
+function grpCard(){return '<div class=card><h2>Lien et QR pour mon groupe</h2><label>Nom de mon groupe (par exemple ton prénom)<input type=text id=gn></label><label><input type=checkbox id=gs checked> Inclure la carte sensible</label><button class=btn onclick=mkGrp()>Créer le lien et le QR</button>'+(MYL?'<p>Les élèves de ton groupe scannent ce QR ou ouvrent ce lien :</p><p><b>'+esc(MYL)+'</b></p><div class=qrbox id=qr></div>':'')+'</div>'}
+function impCard(){return '<div class=card><h2>Ajouter le bilan d’une équipe</h2><p class=mut>À la fin de la partie, chaque équipe voit un code. Colle-le ici.</p><input type=text id=ic>'+(IMSG?'<p>'+esc(IMSG)+'</p>':'')+'<button class=btn onclick=impCode()>Ajouter ce bilan</button></div>'}
+function impCode(){var v=document.getElementById('ic').value.trim();try{var a=decodeURIComponent(escape(atob(v))).split('|');if(a.length!==10)throw 0;var ids=+a[3]?[1,2,3,4,5,7,8,9,11]:[1,2,3,4,5,7,10,9,11];EQ.push({id:Date.now(),n:a[1],m:[],so:+a[2],gr:a[0],r:{g:{e:+a[4],l:+a[5],s:+a[6]},a:+a[7],u:+a[8],l:a[9].split('').map(function(c,i){return [C[ids[i]]?C[ids[i]].t:'?',c]})}});store();IMSG='Bilan ajouté : '+a[1]}catch(e){IMSG='Code non reconnu. Vérifie qu’il est copié en entier.'}draw()}
+function bcode(){var t=S.team,a=[t.gr?t.gr.slug:'',t.n.replace(/\|/g,' '),t.solo,S.sens?1:0,S.g.e,S.g.l,S.g.s,S.alerts,S.used,S.log.map(function(x){return x[1]}).join('')];return btoa(unescape(encodeURIComponent(a.join('|'))))}
+function codeCard(){if(!S.team)return '';return '<div class=card><h2>Code bilan de ton équipe</h2><p>Montre ce code à ton tuteur ou à ta tutrice pour qu’il apparaisse dans le comparatif.</p><input type=text readonly id=bc value="'+bcode()+'" onclick=this.select()></div>'}
+function introG(){var g=grp();return '<h1>Check-in</h1><p class=mut>Une semaine avec Alex : un jeu coopératif sur la santé mentale.</p><div class=card><h2>Groupe de '+esc(g.slug)+'</h2><label>Nom de ton équipe (ou ton prénom si tu joues seul·e)<input type=text id=tn></label><label><input type=checkbox id=solo> Je joue seul·e</label><input type=checkbox id=sens hidden'+(g.sens?' checked':'')+'></div><div class=card><h2>Comment jouer</h2><p>Vous incarnez Alex, un·e lycéen·ne fictif·ve, du lundi au vendredi. À chaque situation, discutez 1 minute puis choisissez une réaction. Trois jauges évoluent : Énergie, Liens et Sérénité. Si l’une tombe à 0, Alex doit demander de l’aide.</p><p>Ce qui se dit reste dans le groupe. Chacun·e peut passer son tour ou sortir sans se justifier. On parle d’Alex, pas de soi.</p></div><button class=btn onclick=start()>Commencer la semaine</button>'}
+function admP(){var h='<h1>Espace animateur</h1><p class=mut>Les noms restent sur cet appareil : rien n’est envoyé en ligne.</p>'+grpCard()+'<div class=card><h2>Ajouter une équipe ou un joueur</h2><label>Nom de l’équipe ou du joueur<input type=text id=en></label><label>Membres (un par ligne, vide pour un joueur seul)<textarea id=em rows=3></textarea></label><button class=btn onclick=addEq()>Ajouter</button></div>'+impCard()+'<div class=card><h2>Équipes et joueurs</h2>';if(!EQ.length)h+='<p class=mut>Aucune équipe pour l’instant.</p>';EQ.forEach(function(e){h+='<p><b>'+esc(e.n)+'</b> '+(e.m.length>1?'('+e.m.length+' membres : '+esc(e.m.join(', '))+')':(e.so===0?'(équipe)':'(joueur seul)'))+(e.r?', bilan enregistré':'')+'<br><button class="btn sec" onclick=start('+e.id+')>'+(e.r?'Rejouer':'Jouer')+'</button> <button class="btn sec" onclick=delEq('+e.id+')>Supprimer</button></p>'});h+='<label><input type=checkbox id=sens checked> Inclure la carte sensible</label></div>';return h+'<button class=btn onclick=cmp()>Comparer les bilans</button> <button class="btn sec" onclick=reset()>Quitter</button>'}
+function cmpP(){var d=EQ.filter(function(e){return e.r}),h='<h1>Comparatif des bilans</h1>';if(!d.length)return h+'<p>Aucune partie terminée pour l’instant.</p><button class=btn onclick=adm()>Retour</button>';h+='<div class="card sc"><table><tr><th>Équipe</th><th>Énergie</th><th>Liens</th><th>Sérénité</th><th>Alertes</th><th>Ressources utilisées</th></tr>';d.forEach(function(e){var r=e.r;h+='<tr><td>'+esc(e.n)+(e.m.length>1?'<br>'+esc(e.m.join(', ')):'')+'</td><td>'+r.g.e+'</td><td>'+r.g.l+'</td><td>'+r.g.s+'</td><td>'+r.a+'</td><td>'+r.u+'</td></tr>'});h+='</table></div><div class="card sc"><h2>Choix par situation</h2><table><tr><th>Situation</th>'+d.map(function(e){return '<th>'+esc(e.n)+'</th>'}).join('')+'</tr>';var seen=[];d.forEach(function(e){e.r.l.forEach(function(x){if(seen.indexOf(x[0])<0)seen.push(x[0])})});seen.forEach(function(t){h+='<tr><td>'+t+'</td>'+d.map(function(e){var f=e.r.l.filter(function(x){return x[0]===t})[0];return '<td>'+(f?f[1]:'–')+'</td>'}).join('')+'</tr>'});return h+'</table><p class=mut>Pour le débriefing : quelle équipe a choisi quoi, et qu’est-ce que cela a changé pour Alex ?</p></div><button class=btn onclick=adm()>Retour</button>'}
+
+function cl(v){return Math.max(0,Math.min(8,v))}
+function cur(){return S.deck[S.i]}
+function topbar(){return '<div class="top"><span>'+DAYS[S.i]+', carte '+(S.i+1)+' sur 10</span><span>Alertes rouges : '+S.alerts+'</span></div>'}
+function gauges(){
+ var h='<div class="gs">';
+ ["e","l","s"].forEach(function(k){
+  var v=S.g[k],b="";
+  for(var j=0;j<8;j++)b+='<i'+(j<v?' class="on"':'')+'></i>';
+  h+='<div class="g '+k+'"><b>'+NAMES[k]+'</b><span class="bar">'+b+'</span><em>'+v+' sur 8</em></div>';
+ });
+ return h+'<div class="g"><b>Ressources</b><em>'+S.res+' en réserve</em></div></div>';
+}
+function start(eid){
+ var sens=document.getElementById("sens").checked;var tn=document.getElementById('tn'),so=document.getElementById('solo'),team=tn&&!eid?{n:tn.value.trim()||'Sans nom',solo:so&&so.checked?1:0,gr:grp()}:null;
+ var ids=sens?[1,2,3,4,5,7,8,9,11,12]:[1,2,3,4,5,7,10,9,11,12];
+ ADM=null;S={deck:ids.map(function(n){return C[n]}),i:0,g:{e:5,l:5,s:5},res:0,used:0,alerts:0,ph:"choose",p:null,who:null,phr:null,eid:eid||null,log:[],team:team,sens:sens};
+ draw(1);
+}
+function pick(k){
+ var ef=cur().o[k][1];
+ S.p=k;S.log.push([cur().t,'ABC'[k]]);
+ ["e","l","s"].forEach(function(x){if(ef[x])S.g[x]=cl(S.g[x]+ef[x])});
+ if(ef.r)S.res++;
+ S.ph="result";draw(1);
+}
+function useRes(k){if(S.res>0){S.res--;S.used++;S.g[k]=cl(S.g[k]+2);draw()}}
+function next(){
+ var z=["e","l","s"].some(function(k){return S.g[k]===0});
+ if(z){S.ph="alert";S.who=null;S.phr=null;draw(1)}else adv();
+}
+function adv(){S.i++;S.p=null;S.ph="choose";draw(1)}
+function sel(t,v){S[t]=v;draw()}
+function help(){
+ ["e","l","s"].forEach(function(k){if(S.g[k]===0)S.g[k]=3});
+ S.alerts++;adv();
+}
+function finish(){S.ph="end";save();draw(1)}
+function reset(){S=null;ADM=null;draw(1)}
+
+function intro(){
+ return '<h1>Check-in</h1><p class="mut">Une semaine avec Alex : un jeu coopératif sur la santé mentale, pour des lycéens.</p>'+
+ '<div class="card"><h2>Comment jouer</h2><ol><li>Votre équipe incarne Alex, un·e lycéen·ne fictif·ve, du lundi au vendredi.</li><li>À chaque situation, discutez 1 minute, puis choisissez une réaction.</li><li>Trois jauges évoluent : Énergie, Liens et Sérénité. Si l’une tombe à 0, Alex doit demander de l’aide.</li><li>Demander de l’aide rapporte des ressources : chacune donne +2 sur une jauge.</li></ol><p>Il n’y a pas de gagnant. On compare ses choix à la fin.</p></div>'+
+ '<div class="card"><h2>Cadre de l’atelier</h2><p>Ce qui se dit reste dans le groupe, sauf si quelqu’un est en danger. Chacun·e peut passer son tour ou sortir sans se justifier. On parle d’Alex, pas de soi.</p><label><input type="checkbox" id="sens" checked> Inclure la carte sensible (une amie va mal). À décocher pour un groupe très jeune ou fragile.</label></div>'+
+ '<button class="btn" onclick="start()">Commencer la semaine</button>'+(location.hash==='#animateur'?' <button class="btn sec" onclick="adm()">Espace animateur</button>':'');
+}
+function choose(c){
+ if(c.f){
+  return topbar()+gauges()+'<div class="card"><h2>'+c.t+'</h2><p>'+c.s+'</p><ol>'+c.q.map(function(q){return '<li>'+q+'</li>'}).join("")+'</ol></div><button class="btn" onclick="finish()">Voir le bilan de la semaine</button>';
+ }
+ var h=topbar()+gauges()+'<div class="card">'+vis(c)+'<h2>'+c.t+'</h2><p>'+c.s+'</p>';
+ if(c.w)h+='<p class="note warn">Animateur·rice : rappelez que chacun·e peut passer son tour ou sortir de la salle.</p>';
+ h+='</div>';
+ c.o.forEach(function(o,k){h+='<button class="opt" onclick="pick('+k+')"><b>'+"ABC"[k]+'</b>'+o[0]+'</button>'});
+ return h+'<div class=card><span id=tv role=timer>1:00</span><button class="btn sec" onclick=tstart()>Relancer le chrono</button><p class=mut>Discutez en équipe avant de choisir. Le chrono est un repère, pas une obligation.</p></div>';
+}
+function result(c){
+ var o=c.o[S.p],ef=o[1],chips="";
+ ["e","l","s"].forEach(function(k){if(ef[k])chips+='<span class="chip">'+NAMES[k]+' '+(ef[k]>0?'+':'−')+Math.abs(ef[k])+'</span>'});
+ if(ef.r)chips+='<span class="chip">+1 ressource</span>';
+ var h=topbar()+gauges()+'<div class="card"><h2>'+c.t+'</h2><p><b>Votre choix :</b> '+o[0]+'</p><p>'+chips+'</p><p class="note"><b>À retenir :</b> '+c.k+'</p></div>';
+ if(S.res>0){
+  h+='<div class="card"><p>Vous avez '+S.res+' ressource'+(S.res>1?'s':'')+'. En utiliser une pour gagner +2 sur :</p>';
+  ["e","l","s"].forEach(function(k){h+='<button class="btn sec" onclick="useRes(\''+k+'\')">'+NAMES[k]+'</button> '});
+  h+='</div>';
+ }
+ return h+'<button class="btn" onclick="next()">Carte suivante</button>';
+}
+function alertP(){
+ var h=topbar()+gauges()+'<div class="card"><h2>Alerte rouge : Alex doit demander de l’aide</h2><p>Une jauge est tombée à 0. Choisissez ensemble à qui Alex peut parler, puis les mots qu’il ou elle pourrait dire.</p><p><b>À qui ?</b></p>';
+ WHO.forEach(function(w,i){h+='<button class="opt'+(S.who===i?' sel':'')+'" aria-pressed="'+(S.who===i)+'" onclick="sel(\'who\','+i+')">'+w+'</button>'});
+ h+='<p><b>Quelle phrase ?</b></p>';
+ PHR.forEach(function(w,i){h+='<button class="opt'+(S.phr===i?' sel':'')+'" aria-pressed="'+(S.phr===i)+'" onclick="sel(\'phr\','+i+')">'+w+'</button>'});
+ h+='<p class="mut">Vous pouvez aussi inventer votre propre phrase.</p></div>';
+ return h+'<button class="btn" onclick="help()"'+(S.who===null||S.phr===null?' disabled':'')+'>Alex demande de l’aide (la jauge remonte à 3)</button>';
+}
+function endP(){
+ return '<h1>Fin de la semaine</h1>'+gauges()+codeCard()+
+ '<div class="card"><p>Alertes rouges : <b>'+S.alerts+'</b>. Ressources utilisées : <b>'+S.used+'</b>.</p><p>Comparez avec les autres équipes : quels choix ont fait remonter les jauges, et lesquels les ont fait baisser ? Qu’est-ce qui a aidé Alex quand il ou elle allait mal ?</p><p class="note">Aller mal à un moment, ça arrive à tout le monde. Ce qui compte, c’est de savoir qu’on peut en parler et qu’il existe des personnes pour aider.</p></div>'+
+ '<div class="card"><h2>Où trouver de l’aide</h2><ul><li>Au lycée : infirmier·ère scolaire, CPE, psychologue de l’Éducation nationale</li><li><b>3114</b> : prévention du suicide, gratuit, 24 h/24</li><li><b>0 800 235 236</b> (Fil Santé Jeunes) : écoute gratuite et anonyme pour les 12-25 ans</li><li><b>3018</b> : cyberharcèlement, gratuit et confidentiel</li><li><b>119</b> : enfance en danger</li><li><b>15</b> ou <b>112</b> : urgence vitale</li></ul><p class="mut">Numéros à vérifier avant l’atelier.</p></div>'+
+ (S.eid?'<button class="btn" onclick="adm()">Retour à l’espace animateur</button>':'<button class="btn" onclick="reset()">Rejouer une semaine</button>');
+}
+function draw(sc){
+ tstop();var h;
+ if(ADM==='adm')h=admP();
+ else if(ADM==='cmp')h=cmpP();
+ else if(S===null)h=grp()?introG():intro();
+ else if(S.ph==="end")h=endP();
+ else if(S.ph==="alert")h=alertP();
+ else if(S.ph==="result")h=result(cur());
+ else h=choose(cur());
+ app.innerHTML=h;if(ADM==='adm')qr();if(document.getElementById('tv'))tstart();
+ if(sc)window.scrollTo(0,0);
+}
+draw();
+</script>
+</body>
+</html>
